@@ -13,6 +13,11 @@ namespace TeamProject2022.Hubs
         Player _self;
         Player _player;
         //IInMemoryStorage<DebugPlayer> _strage;
+        /*
+         * @val     _strage
+         * @brief   それぞれのプレイヤーを格納している変数
+         *          配列のように _strage.AllValues.Countのように扱える？
+         */
         IInMemoryStorage<Player> _strage;
 
         //public async Task<DebugPlayer[]> JoinAsync(string RoomName, string UserName,
@@ -28,10 +33,11 @@ namespace TeamProject2022.Hubs
         public async Task<Player[]> JoinAsync(string RoomName, string UserName,
             Vector3 Position, Quaternion Rotation)
         {
+            int a = _strage.AllValues.Count;
             _self = new Player { Name = UserName, Position = Position, Rotation = Rotation };
             (_room, _strage) = await Group.AddAsync(RoomName, _self);
             //BroadcastExceptSelf(_room).OnJoin(_self);
-            BroadcastExceptSelf(_room).OnJoin(_player);
+            BroadcastExceptSelf(_room).OnJoin(_player,_self.Position);
 
             return _strage.AllValues.ToArray();
         }
