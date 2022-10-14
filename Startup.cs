@@ -32,7 +32,6 @@ namespace Server
 
             app.UseEndpoints(endpoints =>
             {
-
                 //endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapMagicOnionService();
 
