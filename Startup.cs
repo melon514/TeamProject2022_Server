@@ -15,13 +15,18 @@ namespace Server
     public sealed class ServerInfo
     {
         /*
+         * @var     TimeLimit
+         * @brief   ゲームの時間制限
+         *          これを弄って決めるといいよ
+         */
+        public float TimeLimit = 300;
+        /*
          * @var     span
          * @brief   一秒にかかる時間
          *          この変数をクライアントに渡し続ける
          */
         public float span { get; set; }
         
-
         /*
          * @var     ElapsedTime
          * @brief   経過した時間
@@ -63,8 +68,9 @@ namespace Server
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
-                ElapsedTime += span;
-                Console.WriteLine(ElapsedTime);
+                TimeLimit -= span;
+                //ElapsedTime += span;
+                //Console.WriteLine(ElapsedTime);
 
             }
         }

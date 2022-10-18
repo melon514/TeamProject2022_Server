@@ -20,7 +20,8 @@ namespace Client.Services
 
         public async UnaryResult<float> AsyncTimeSet(float time)
         {
-            return time = ServerInfo.GetServerInfo().ElapsedTime;
+            
+            return ServerInfo.GetServerInfo().TimeLimit;
         }
     }
 }
