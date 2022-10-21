@@ -22,7 +22,9 @@ namespace TeamProject2022.Hubs
             _self = new Player { Name = UserName, Position = Position, Rotation = Rotation };
             (_room, _storage) = await Group.AddAsync(RoomName, _self);
             //BroadcastExceptSelf(_room).OnJoin(_self);
-            BroadcastExceptSelf(_room).OnJoin(_self);
+
+            //BroadcastExceptSelf(_room).OnJoin(_self);
+            Broadcast(_room).OnJoin(_self);
             
 
             return _storage.AllValues.ToArray();
