@@ -17,7 +17,6 @@ namespace Client.Services
             return x + y;
             
         }
-
         public async UnaryResult<float> AsyncTimeSet(float time)
         {
             

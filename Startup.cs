@@ -9,9 +9,20 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeamProject2022.Shared.MessagePacks;
+using UnityEngine;
+
 
 namespace Server
 {
+    public class Targets
+    {
+        public int id { get; set; }
+        private Vector3 pos { get; set; }
+
+    }
+
+
     public sealed class ServerInfo
     {
         /*
@@ -32,6 +43,8 @@ namespace Server
          * @brief   経過した時間
          *          これを別スレッドで追加しながらクライアントに送ればいい感じになりそう
          */
+
+        public List<Targets> targets;
         public float ElapsedTime { get; set; }
         private static ServerInfo SERVERINFO = new ServerInfo();
         private ServerInfo() { }
@@ -69,18 +82,33 @@ namespace Server
             {
                 System.Threading.Thread.Sleep(1000);
                 TimeLimit -= span;
-                //ElapsedTime += span;
-                //Console.WriteLine(ElapsedTime);
-
             }
         }
+
+        public void logic()
+        {
+            while (true)
+            {
+                if (Math.Floor(TimeLimit) % 10 == 0)
+                {
+                    //NOTE:(melon)  ここはとりあえず4を入れてる
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        Targets t = null;
+                        t.id = i;
+                        
+
+
+                    }
+                }
+            }
+        }
+        
     }
 
 
     public class Startup
     {
-        
-
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -94,8 +122,10 @@ namespace Server
         {
             //タイムスパン取得用
             ServerInfo.GetServerInfo().SetUpTimeSpan();
-            Thread t = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            t.Start();
+            Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+            Thread logic = new Thread(new ThreadStart(ServerInfo.GetServerInfo().logic));
+            clock.Start();
+            logic.Start();
 
             if (env.IsDevelopment())
             {

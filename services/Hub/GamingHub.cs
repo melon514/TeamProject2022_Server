@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagicOnion.Server.Hubs;
 using TeamProject2022.Shared.Hub;
-using TeamProject2022.Shared.MessagePackObject;
+using TeamProject2022.Shared.MessagePacks;
 using UnityEngine;
 
 namespace TeamProject2022.Hubs
@@ -25,7 +25,7 @@ namespace TeamProject2022.Hubs
 
             //BroadcastExceptSelf(_room).OnJoin(_self);
             Broadcast(_room).OnJoin(_self);
-            
+
 
             return _storage.AllValues.ToArray();
         }
@@ -49,6 +49,7 @@ namespace TeamProject2022.Hubs
         {
             await CompletedTask;
         }
+        
         
     }
 }
