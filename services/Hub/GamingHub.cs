@@ -26,6 +26,7 @@ namespace TeamProject2022.Hubs
             //BroadcastExceptSelf(_room).OnJoin(_self);
             Broadcast(_room).OnJoin(_self);
 
+            
 
             return _storage.AllValues.ToArray();
         }

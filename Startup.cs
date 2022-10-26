@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,13 +16,6 @@ using UnityEngine;
 
 namespace Server
 {
-    public class Targets
-    {
-        public int id { get; set; }
-        private Vector3 pos { get; set; }
-
-    }
-
 
     public sealed class ServerInfo
     {
@@ -37,15 +31,9 @@ namespace Server
          *          この変数をクライアントに渡し続ける
          */
         public float span { get; set; }
-        
-        /*
-         * @var     ElapsedTime
-         * @brief   経過した時間
-         *          これを別スレッドで追加しながらクライアントに送ればいい感じになりそう
-         */
 
-        public List<Targets> targets;
-        public float ElapsedTime { get; set; }
+
+        public List<Targets> targets = new List<Targets>();
         private static ServerInfo SERVERINFO = new ServerInfo();
         private ServerInfo() { }
 
@@ -87,19 +75,33 @@ namespace Server
 
         public void logic()
         {
+            System.Random pos;
             while (true)
             {
+                //あった時邪魔なので削除
+                if (targets.Count > 0)
+                {
+                    targets.Clear();
+                    continue;
+                }
+                //10秒ごとに的を生成してそれを送る
                 if (Math.Floor(TimeLimit) % 10 == 0)
                 {
-                    //NOTE:(melon)  ここはとりあえず4を入れてる
+                    pos = new System.Random((int)TimeLimit);
+                    //NOTE:(melon)  ここはとりあえず4体生成したいのでを入れてる
                     for (int i = 0; i < 4; ++i)
                     {
-                        Targets t = null;
+                        Targets t = new Targets();
                         t.id = i;
-                        
+                        t.pos = new Vector3(pos.Next(-500, 500),
+                            0.0f,
+                            pos.Next(-500, 500));
 
-
+                        //完成品をlitに入れる
+                        targets.Add(t);                    //次にまた入るのがめんどくさいので1秒待機
+                        Console.WriteLine(t.id + ":" + t.pos.x + "_" + t.pos.y + "_" + t.pos.z);
                     }
+                    System.Threading.Thread.Sleep(1500);
                 }
             }
         }
