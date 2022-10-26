@@ -32,9 +32,10 @@ namespace Server
          */
         public float span { get; set; }
 
-
+        //for debug
         public List<Targets> targets = new List<Targets>();
         private static ServerInfo SERVERINFO = new ServerInfo();
+
         private ServerInfo() { }
 
         /*
@@ -68,44 +69,48 @@ namespace Server
         {
             while (true)
             {
-                System.Threading.Thread.Sleep(1000);
-                TimeLimit -= span;
-            }
-        }
-
-        public void logic()
-        {
-            System.Random pos;
-            while (true)
-            {
-                //あった時邪魔なので削除
-                if (targets.Count > 0)
+                //note:(melon)  実体に持たせててずっと保存されてるため1ループしたら削除するようにこの処理
+                if (targets.Count >= 1)
                 {
                     targets.Clear();
-                    continue;
                 }
-                //10秒ごとに的を生成してそれを送る
+                //ミリ秒換算で1秒スリープしてlimitを減らしてる
+                System.Threading.Thread.Sleep(1000);
+                TimeLimit -= span;
+
                 if (Math.Floor(TimeLimit) % 10 == 0)
                 {
-                    pos = new System.Random((int)TimeLimit);
-                    //NOTE:(melon)  ここはとりあえず4体生成したいのでを入れてる
-                    for (int i = 0; i < 4; ++i)
-                    {
-                        Targets t = new Targets();
-                        t.id = i;
-                        t.pos = new Vector3(pos.Next(-500, 500),
-                            0.0f,
-                            pos.Next(-500, 500));
+                    //スレッドで実行するとだいぶ重くなるので別枠でタスクを走らせる
+                    Task.Run(() => logic());
 
-                        //完成品をlitに入れる
-                        targets.Add(t);                    //次にまた入るのがめんどくさいので1秒待機
-                        Console.WriteLine(t.id + ":" + t.pos.x + "_" + t.pos.y + "_" + t.pos.z);
-                    }
-                    System.Threading.Thread.Sleep(1500);
                 }
             }
         }
-        
+
+        public async void logic()
+        {
+            //UnityEngineのRandomが使えませんクソです
+            System.Random pos;
+            //あった時邪魔なので削除
+
+            pos = new System.Random((int)TimeLimit);
+            //NOTE:(melon)  ここはとりあえず4体生成したいのでを入れてる
+            for (int i = 0; i < 4; ++i)
+            {
+                Targets t = new Targets();
+                t.id = i;
+                t.x = pos.Next(-500, 500);
+                t.y = 0.0f;
+                t.z = pos.Next(-500, 500);
+                //t.pos = new Vector3(pos.Next(-500, 500),
+                //    0.0f,
+                //    pos.Next(-500, 500));
+
+                //完成品をlistに入れる
+                targets.Add(t);
+                Console.WriteLine(t.id + ":" + t.x + "_" + t.y + "_" + t.z);
+            }
+        }
     }
 
 
@@ -125,9 +130,9 @@ namespace Server
             //タイムスパン取得用
             ServerInfo.GetServerInfo().SetUpTimeSpan();
             Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            Thread logic = new Thread(new ThreadStart(ServerInfo.GetServerInfo().logic));
+            //Thread logic = new Thread(new ThreadStart(ServerInfo.GetServerInfo().logic));
             clock.Start();
-            logic.Start();
+            //logic.Start();
 
             if (env.IsDevelopment())
             {
