@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using MagicOnion;
 using MagicOnion.Server;
 using Server;
@@ -28,6 +29,17 @@ namespace Client.Services
         public async UnaryResult<List<Targets>> AsyncTargets()
         {
             return ServerInfo.GetServerInfo().targets;
+        }
+
+        public async UnaryResult<bool> AsyncAddScore(string name, int score)
+        {
+            ServerInfo.GetServerInfo().ScoreList[name] += score;
+            return true;
+        }
+
+        public async UnaryResult<List<int>> AsyncGetScores()
+        {
+            return ServerInfo.GetServerInfo().ScoreList.Values.ToList();
         }
 
     }

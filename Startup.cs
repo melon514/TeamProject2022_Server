@@ -24,17 +24,34 @@ namespace Server
          * @brief   ゲームの時間制限
          *          これを弄って決めるといいよ
          */
-        public float TimeLimit = 300;
+        //public float TimeLimit = 300;
+        public float TimeLimit = 75;
         /*
          * @var     span
          * @brief   一秒にかかる時間
          *          この変数をクライアントに渡し続ける
          */
         public float span { get; set; }
-
-        //for debug
+        
+        /*
+         * @var     targets
+         * @brief   ターゲットのリスト
+         */
         public List<Targets> targets = new List<Targets>();
+
+        /*
+         * @var     SERVERINFO
+         * @brief   この実体一つで管理したいのでこのような形式にしてる
+         */
         private static ServerInfo SERVERINFO = new ServerInfo();
+
+        /*
+         * @var     ScoreList
+         * @brief   プレイヤーのスコアのリスト
+         * @key     プレイヤーの名前
+         * @value   プレイヤーのスコア
+         */
+        public Dictionary<string, int> ScoreList = new Dictionary<string, int>();
 
         private ServerInfo() { }
 
@@ -108,8 +125,18 @@ namespace Server
 
                 //完成品をlistに入れる
                 targets.Add(t);
-                Console.WriteLine(t.id + ":" + t.x + "_" + t.y + "_" + t.z);
             }
+            //for debug
+            foreach (var sl in ScoreList)
+            {
+                if (ScoreList.Count == 0)
+                {
+                    Console.WriteLine("ListValue is None");
+                    break;
+                }
+                Console.WriteLine(sl.Key + ":" + sl.Value);
+            }
+
         }
     }
 

@@ -20,6 +20,8 @@ namespace TeamProject2022.Hubs
             Vector3 Position, Quaternion Rotation)
         {
             _self = new Player { Name = UserName, Position = Position, Rotation = Rotation };
+            //入室してきたときにDictionaryの値を追加
+            Server.ServerInfo.GetServerInfo().ScoreList.Add(UserName, 0);
             (_room, _storage) = await Group.AddAsync(RoomName, _self);
             //BroadcastExceptSelf(_room).OnJoin(_self);
 

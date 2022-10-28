@@ -1,26 +1,99 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bouni\\dev\\TeamProjects\\TeamProject2022_Server\\Server.csproj": {}
+    "E:\\MyUnityProject\\Server\\Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\Shared.csproj": {
+    "E:\\MyUnityProject\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\Shared.csproj",
-        "projectName": "Shared",
-        "projectPath": "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\bouni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\obj\\",
+        "projectUniqueName": "E:\\MyUnityProject\\Server\\Server.csproj",
+        "projectName": "Server",
+        "projectPath": "E:\\MyUnityProject\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\2190286\\.nuget\\packages\\",
+        "outputPath": "E:\\MyUnityProject\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bouni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\2190286\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "E:\\MyUnityProject\\Shared\\Shared.csproj": {
+                "projectPath": "E:\\MyUnityProject\\Shared\\Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.34.0, )"
+            },
+            "MagicOnion.Server": {
+              "target": "Package",
+              "version": "[4.5.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\MyUnityProject\\Shared\\Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\MyUnityProject\\Shared\\Shared.csproj",
+        "projectName": "Shared",
+        "projectPath": "E:\\MyUnityProject\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\2190286\\.nuget\\packages\\",
+        "outputPath": "E:\\MyUnityProject\\Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\2190286\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -55,8 +128,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -65,79 +137,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\bouni\\dev\\TeamProjects\\TeamProject2022_Server\\Server.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\bouni\\dev\\TeamProjects\\TeamProject2022_Server\\Server.csproj",
-        "projectName": "Server",
-        "projectPath": "C:\\Users\\bouni\\dev\\TeamProjects\\TeamProject2022_Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\bouni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bouni\\dev\\TeamProjects\\TeamProject2022_Server\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\bouni\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\bouni\\dev\\TeamProjects\\Shared\\Shared.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Grpc.AspNetCore": {
-              "target": "Package",
-              "version": "[2.34.0, )"
-            },
-            "MagicOnion.Server": {
-              "target": "Package",
-              "version": "[4.5.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
