@@ -53,6 +53,16 @@ namespace Server
          */
         public Dictionary<string, int> ScoreList = new Dictionary<string, int>();
 
+        /*
+         * @var     Players
+         * @brief   現在接続されてるプレイヤー
+         *          名前をKeyにそのIDで管理できるようにしてる
+         */
+        public Dictionary<string, int> Players = new Dictionary<string, int>();
+
+        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
+        //public Dictionary<string, Dictionary<int, string>> Rooms = new Dictionary<string, Dictionary<int, string>>();
+
         private ServerInfo() { }
 
         /*

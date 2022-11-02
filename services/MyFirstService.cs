@@ -42,5 +42,19 @@ namespace Client.Services
             return ServerInfo.GetServerInfo().ScoreList.Values.ToList();
         }
 
+        public async UnaryResult<int> GetConnectID(string name)
+        {
+            //あるかどうかを確認してなかった場合は登録してから返すようにする
+            if (ServerInfo.GetServerInfo().Players.ContainsKey(name))
+            {
+                return ServerInfo.GetServerInfo().Players[name];
+            }
+            else
+            {
+                ServerInfo.GetServerInfo().Players.Add(name,ServerInfo.GetServerInfo().Players.Count);
+                return ServerInfo.GetServerInfo().Players[name];
+            }
+        }
+
     }
 }
