@@ -16,6 +16,15 @@ using UnityEngine;
 
 namespace Server
 {
+    /*
+     * @class       Room
+     * @brief       サーバーが保存するルーム情報
+     *              今持たせてるのはPlayerの情報のみ
+     */
+    public class Room
+    {
+        public List<Player> PlayerData;
+    }
 
     public sealed class ServerInfo
     {
@@ -61,7 +70,12 @@ namespace Server
         public Dictionary<string, int> Players = new Dictionary<string, int>();
 
         //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
-        //public Dictionary<string, Dictionary<int, string>> Rooms = new Dictionary<string, Dictionary<int, string>>();
+        /*
+         * @var     Rooms
+         * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
+         *          もしかしたらintの部分をPlayerにするといろいろ悪いことできるかも？
+         */
+        public Dictionary<string,Room> Rooms = new Dictionary<string, Room>();
 
         private ServerInfo() { }
 
@@ -108,13 +122,13 @@ namespace Server
                 if (Math.Floor(TimeLimit) % 10 == 0)
                 {
                     //スレッドで実行するとだいぶ重くなるので別枠でタスクを走らせる
-                    Task.Run(() => logic());
+                    Task.Run(() => Com_AppereTarget());
 
                 }
             }
         }
 
-        public async void logic()
+        public async void Com_AppereTarget()
         {
             //UnityEngineのRandomが使えませんクソです
             System.Random pos;
@@ -167,9 +181,7 @@ namespace Server
             //タイムスパン取得用
             ServerInfo.GetServerInfo().SetUpTimeSpan();
             Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            //Thread logic = new Thread(new ThreadStart(ServerInfo.GetServerInfo().logic));
             clock.Start();
-            //logic.Start();
 
             if (env.IsDevelopment())
             {

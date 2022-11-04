@@ -42,7 +42,7 @@ namespace Client.Services
             return ServerInfo.GetServerInfo().ScoreList.Values.ToList();
         }
 
-        public async UnaryResult<int> GetConnectID(string name)
+        public async UnaryResult<int> GetConnectCount(string name)
         {
             //あるかどうかを確認してなかった場合は登録してから返すようにする
             if (ServerInfo.GetServerInfo().Players.ContainsKey(name))
@@ -55,6 +55,15 @@ namespace Client.Services
                 return ServerInfo.GetServerInfo().Players[name];
             }
         }
+
+        public async UnaryResult<List<string>> GetOtherPlayers(string name)
+        {
+            List<string> Others = new List<string>(ServerInfo.GetServerInfo().Players.Keys);
+            Others.Remove(name);
+            return Others;
+
+        }
+
 
     }
 }
