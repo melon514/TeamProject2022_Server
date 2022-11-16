@@ -41,7 +41,7 @@ namespace Client.Services
         {
             return ServerInfo.GetServerInfo().ScoreList.Values.ToList();
         }
-
+        
         public async UnaryResult<int> GetConnectCount(string name)
         {
             //あるかどうかを確認してなかった場合は登録してから返すようにする
