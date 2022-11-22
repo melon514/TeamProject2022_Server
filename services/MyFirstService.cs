@@ -51,6 +51,7 @@ namespace Client.Services
             }
             else
             {
+                
                 ServerInfo.GetServerInfo().Players.Add(name,ServerInfo.GetServerInfo().Players.Count);
                 return ServerInfo.GetServerInfo().Players[name];
             }
