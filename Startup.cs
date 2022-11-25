@@ -63,6 +63,13 @@ namespace Server
         public Dictionary<string, int> ScoreList = new Dictionary<string, int>();
 
         /*
+         * @var     PlayerReady
+         * @brief   プレイヤーが準備完了してるかどうか
+         * @key     プレイヤーの名前
+         * @value   プレイヤーの待機状態
+         */
+        public Dictionary<string, bool> PlayerReady = new Dictionary<string, bool>();
+        /*
          * @var     Players
          * @brief   現在接続されてるプレイヤー
          *          名前をKeyにそのIDで管理できるようにしてる

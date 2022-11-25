@@ -51,9 +51,11 @@ namespace Client.Services
             }
             else
             {
-                
-                ServerInfo.GetServerInfo().Players.Add(name,ServerInfo.GetServerInfo().Players.Count);
-                return ServerInfo.GetServerInfo().Players[name];
+                //登録された時についでにリストに追加
+                ServerInfo.GetServerInfo().PlayerReady.Add(name, false);
+                var count = ServerInfo.GetServerInfo().Players.Count;
+                ServerInfo.GetServerInfo().Players.Add(name,count);
+                return count;
             }
         }
 
@@ -63,6 +65,33 @@ namespace Client.Services
             Others.Remove(name);
             return Others;
 
+        }
+
+        public async UnaryResult<bool> OnReady(string name, bool ready)
+        {
+            Console.WriteLine(ServerInfo.GetServerInfo().PlayerReady.Count);
+            //そもそも4人集まってなかったら始めないようにする、デフォルト4人
+            //todo(melon):  ルーム作成の処理を創ったらここをそのルームのプレイヤーの限界数に変更
+            if (ServerInfo.GetServerInfo().PlayerReady.Count < 1)
+            {
+                return false;
+            }
+
+            //値を入れる
+            ServerInfo.GetServerInfo().PlayerReady[name] = ready;
+
+            foreach (var playerstate in ServerInfo.GetServerInfo().PlayerReady)
+            {
+                Console.WriteLine(playerstate.Key+":"+playerstate.Value);
+                //一人でも準備してなかったらfalseを返す
+                if (!playerstate.Value)
+                {
+                    return false;
+                }
+            }
+            Console.WriteLine("all player ready");
+            //全員準備完了
+            return true;
         }
 
 
