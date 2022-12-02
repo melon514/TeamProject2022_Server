@@ -94,6 +94,13 @@ namespace Client.Services
             return true;
         }
 
+        public async UnaryResult<bool> HitResult(string name)
+        {
+
+
+            return false;
+        }
+
 
     }
 }
