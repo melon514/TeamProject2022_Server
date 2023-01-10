@@ -51,10 +51,16 @@ namespace Client.Services
             }
             else
             {
+                Player pl= new Player();
+                pl.Name = name;
+                pl.hp = 100;
+
                 //登録された時についでにリストに追加
                 ServerInfo.GetServerInfo().PlayerReady.Add(name, false);
                 var count = ServerInfo.GetServerInfo().Players.Count;
                 ServerInfo.GetServerInfo().Players.Add(name,count);
+                ServerInfo.GetServerInfo().PlayerList.Add(name, pl);
+                //ServerInfo.GetServerInfo().PlayerList.Add(name,);
                 return count;
             }
         }
@@ -95,10 +101,27 @@ namespace Client.Services
         }
 
         public async UnaryResult<bool> HitResult(string name)
-        {
-
-
+        { 
+            Console.WriteLine("Hit_Endpoint->" + name);
+            var hp = ServerInfo.GetServerInfo().PlayerList[name].hp -= 3;
+            //当たったらhpを減らすけど継続なのか一括で減らすのかわからなかったためこうしてる
+            if (ServerInfo.GetServerInfo().PlayerList[name].hp <= 0)
+            {
+                return true;
+            }
             return false;
+        }
+
+
+        public async UnaryResult<float> SetterHP(string name)
+        {
+            return ServerInfo.GetServerInfo().PlayerList[name].hp;
+        }
+
+        public async UnaryResult<bool> SetMaxHP(float hp)
+        {
+            ServerInfo.GetServerInfo().MaxHp = hp;
+            return true;
         }
 
 
