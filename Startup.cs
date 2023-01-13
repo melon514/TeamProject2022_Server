@@ -64,6 +64,9 @@ namespace Server
          */
         public Dictionary<string, int> ScoreList = new Dictionary<string, int>();
 
+        public Dictionary<string, bool> Shotflgs = new Dictionary<string, bool>();
+        public Dictionary<string, bool> Barrierflgs = new Dictionary<string, bool>();
+
         /*
          * @var     PlayerReady
          * @brief   プレイヤーが準備完了してるかどうか

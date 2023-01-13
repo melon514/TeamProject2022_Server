@@ -75,6 +75,13 @@ namespace TeamProject2022.Hubs
             _self.Rotation = rot;
             Broadcast(_room).OnMove(_self);
         }
+        public async Task MoveAsync_test(Vector3 pos, Quaternion rot,float hp)
+        {
+            _self.hp = hp;
+            _self.Position = pos;
+            _self.Rotation = rot;
+            Broadcast(_room).OnMove(_self);
+        }
 
 
         protected override async ValueTask OnDisconnected()
