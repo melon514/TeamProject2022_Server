@@ -18,11 +18,12 @@ namespace Client.Services
         {
             //Console.WriteLine($"Received:{x} {y}");
             return x + y;
-            
+
         }
+
         public async UnaryResult<float> AsyncTimeSet(float time)
         {
-            
+
             return ServerInfo.GetServerInfo().TimeLimit;
         }
 
@@ -41,7 +42,7 @@ namespace Client.Services
         {
             return ServerInfo.GetServerInfo().ScoreList.Values.ToList();
         }
-        
+
         public async UnaryResult<int> GetConnectCount(string name)
         {
             //あるかどうかを確認してなかった場合は登録してから返すようにする
@@ -51,15 +52,17 @@ namespace Client.Services
             }
             else
             {
-                Player pl= new Player();
+                Player pl = new Player();
                 pl.Name = name;
                 pl.hp = 100;
 
                 //登録された時についでにリストに追加
                 ServerInfo.GetServerInfo().PlayerReady.Add(name, false);
                 var count = ServerInfo.GetServerInfo().Players.Count;
-                ServerInfo.GetServerInfo().Players.Add(name,count);
+                ServerInfo.GetServerInfo().Players.Add(name, count);
                 ServerInfo.GetServerInfo().PlayerList.Add(name, pl);
+                ServerInfo.GetServerInfo().Shotflgs.Add(name, false);
+                ServerInfo.GetServerInfo().Barrierflgs.Add(name, false);
                 //ServerInfo.GetServerInfo().PlayerList.Add(name,);
                 return count;
             }
@@ -88,20 +91,21 @@ namespace Client.Services
 
             foreach (var playerstate in ServerInfo.GetServerInfo().PlayerReady)
             {
-                Console.WriteLine(playerstate.Key+":"+playerstate.Value);
+                Console.WriteLine(playerstate.Key + ":" + playerstate.Value);
                 //一人でも準備してなかったらfalseを返す
                 if (!playerstate.Value)
                 {
                     return false;
                 }
             }
+
             Console.WriteLine("all player ready");
             //全員準備完了
             return true;
         }
 
         public async UnaryResult<bool> HitResult(string name)
-        { 
+        {
             Console.WriteLine("Hit_Endpoint->" + name);
             var hp = ServerInfo.GetServerInfo().PlayerList[name].hp -= 3;
             //当たったらhpを減らすけど継続なのか一括で減らすのかわからなかったためこうしてる
@@ -109,6 +113,7 @@ namespace Client.Services
             {
                 return true;
             }
+
             return false;
         }
 
@@ -126,13 +131,31 @@ namespace Client.Services
 
         public async void ChangeShotflg(string name)
         {
-
+            //通知が来たら逆の方を入れる
+            ServerInfo.GetServerInfo().Shotflgs[name] =
+                !ServerInfo.GetServerInfo().Shotflgs[name];
         }
 
         public async void ChangeBarrierflg(string name)
         {
-
+            //通知が来たら逆の方を入れる
+            ServerInfo.GetServerInfo().Barrierflgs[name] =
+                !ServerInfo.GetServerInfo().Barrierflgs[name];
         }
 
+        public async UnaryResult<Dictionary<string, bool>> EnemysShotFlg(string name)
+        {
+            Dictionary<string, bool> temp_shotflg =
+                new Dictionary<string, bool>(ServerInfo.GetServerInfo().Shotflgs);
+            temp_shotflg.Remove(name);
+            return temp_shotflg;
+        }
+        public async UnaryResult<Dictionary<string, bool>> EnemysBarrerFlg(string name)
+        {
+            Dictionary<string, bool> temp_barrerflg =
+                new Dictionary<string, bool>(ServerInfo.GetServerInfo().Barrierflgs);
+            temp_barrerflg.Remove(name);
+            return temp_barrerflg;
+        }
     }
 }
