@@ -41,7 +41,9 @@ namespace Server
          *          この変数をクライアントに渡し続ける
          */
         public float span { get; set; }
-        
+
+
+        public float MaxHp = 0.0f;
         /*
          * @var     targets
          * @brief   ターゲットのリスト
@@ -61,6 +63,9 @@ namespace Server
          * @value   プレイヤーのスコア
          */
         public Dictionary<string, int> ScoreList = new Dictionary<string, int>();
+
+        public Dictionary<string, bool> Shotflgs = new Dictionary<string, bool>();
+        public Dictionary<string, bool> Barrierflgs = new Dictionary<string, bool>();
 
         /*
          * @var     PlayerReady
@@ -84,6 +89,8 @@ namespace Server
          */
         public Dictionary<string,Room> Rooms = new Dictionary<string, Room>();
 
+        public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
+        
         private ServerInfo() { }
 
         /*
