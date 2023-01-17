@@ -104,7 +104,7 @@ namespace Client.Services
             return true;
         }
 
-        public async UnaryResult<bool> HitResult(string name)
+        public async UnaryResult<bool> HitResult(string from, string to)
         {
             Console.WriteLine("Hit_Endpoint->" + name);
             var hp = ServerInfo.GetServerInfo().PlayerList[name].hp -= 3;

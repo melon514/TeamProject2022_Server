@@ -1,27 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MyUnityProject\\Server\\Server.csproj": {}
+    "C:\\Users\\tyasu\\Desktop\\Server\\Server.csproj": {}
   },
   "projects": {
-    "E:\\MyUnityProject\\Server\\Server.csproj": {
+    "C:\\Users\\tyasu\\Desktop\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyUnityProject\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\tyasu\\Desktop\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "E:\\MyUnityProject\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\2190286\\.nuget\\packages\\",
-        "outputPath": "E:\\MyUnityProject\\Server\\obj\\",
+        "projectPath": "C:\\Users\\tyasu\\Desktop\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\tyasu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tyasu\\Desktop\\Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\2190286\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tyasu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -29,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "E:\\MyUnityProject\\Shared\\Shared.csproj": {
-                "projectPath": "E:\\MyUnityProject\\Shared\\Shared.csproj"
+              "C:\\Users\\tyasu\\Desktop\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\tyasu\\Desktop\\Shared\\Shared.csproj"
               }
             }
           }
@@ -60,7 +63,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -72,28 +76,31 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\MyUnityProject\\Shared\\Shared.csproj": {
+    "C:\\Users\\tyasu\\Desktop\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyUnityProject\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\tyasu\\Desktop\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "E:\\MyUnityProject\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\2190286\\.nuget\\packages\\",
-        "outputPath": "E:\\MyUnityProject\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\tyasu\\Desktop\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\tyasu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tyasu\\Desktop\\Shared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\2190286\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tyasu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -128,7 +135,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -137,7 +145,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

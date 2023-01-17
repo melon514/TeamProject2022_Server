@@ -81,7 +81,7 @@ namespace Server
          */
         public Dictionary<string, int> Players = new Dictionary<string, int>();
 
-        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
+        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？
         /*
          * @var     Rooms
          * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
@@ -90,7 +90,7 @@ namespace Server
         public Dictionary<string,Room> Rooms = new Dictionary<string, Room>();
 
         public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
-        
+
         private ServerInfo() { }
 
         /*
