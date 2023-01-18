@@ -81,7 +81,7 @@ namespace Client.Services
             Console.WriteLine(ServerInfo.GetServerInfo().PlayerReady.Count);
             //そもそも4人集まってなかったら始めないようにする、デフォルト4人
             //todo(melon):  ルーム作成の処理を創ったらここをそのルームのプレイヤーの限界数に変更
-            if (ServerInfo.GetServerInfo().PlayerReady.Count < 2)
+            if (ServerInfo.GetServerInfo().PlayerReady.Count < 1)
             {
                 return false;
             }
@@ -106,11 +106,18 @@ namespace Client.Services
 
         public async UnaryResult<bool> HitResult(string from, string to)
         {
-            Console.WriteLine("Hit_Endpoint->" + name);
-            var hp = ServerInfo.GetServerInfo().PlayerList[name].hp -= 3;
-            //当たったらhpを減らすけど継続なのか一括で減らすのかわからなかったためこうしてる
-            if (ServerInfo.GetServerInfo().PlayerList[name].hp <= 0)
+            var tempHP = ServerInfo.GetServerInfo().PlayerList[to].hp -= 3;
+            if (tempHP <= 0)
             {
+                return false;
+            }
+            Console.WriteLine("Hit_Endpoint->" + to);
+            //当たったらhpを減らすけど継続なのか一括で減らすのかわからなかったためこうしてる
+            if (ServerInfo.GetServerInfo().PlayerList[to].hp <= 0)
+            {
+                ServerInfo.GetServerInfo().PlayerList[to].hp = ServerInfo.GetServerInfo().MaxHp;
+                ServerInfo.GetServerInfo().ScoreList[from] += 3000;
+
                 return true;
             }
 
@@ -129,18 +136,30 @@ namespace Client.Services
             return true;
         }
 
-        public async void ChangeShotflg(string name)
+        public async UnaryResult<bool> ChangeShotflg(string name,bool flg)
         {
+            if (ServerInfo.GetServerInfo().Shotflgs[name] != flg)
+            {
+                Console.WriteLine("Cahnged_shot");
+            }
+            return ServerInfo.GetServerInfo().Shotflgs[name] = flg;
+
             //通知が来たら逆の方を入れる
-            ServerInfo.GetServerInfo().Shotflgs[name] =
-                !ServerInfo.GetServerInfo().Shotflgs[name];
+            //return ServerInfo.GetServerInfo().Shotflgs[name] =
+            //    !ServerInfo.GetServerInfo().Shotflgs[name];
         }
 
-        public async void ChangeBarrierflg(string name)
+        public async UnaryResult<bool> ChangeBarrierflg(string name,bool flg)
         {
+            if (ServerInfo.GetServerInfo().Barrierflgs[name] != flg)
+            {
+                Console.WriteLine("Cahnged_barrier");
+            }
+            return ServerInfo.GetServerInfo().Barrierflgs[name] = flg;
+
             //通知が来たら逆の方を入れる
-            ServerInfo.GetServerInfo().Barrierflgs[name] =
-                !ServerInfo.GetServerInfo().Barrierflgs[name];
+            //return ServerInfo.GetServerInfo().Barrierflgs[name] =
+            //    !ServerInfo.GetServerInfo().Barrierflgs[name];
         }
 
         public async UnaryResult<Dictionary<string, bool>> EnemysShotFlg(string name)
