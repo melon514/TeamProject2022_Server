@@ -55,7 +55,8 @@ namespace TeamProject2022.Hubs
                 hp = Server.ServerInfo.GetServerInfo().MaxHp,
                 id = temp_id,
                 shotflg = false,
-                barrierflg = false
+                barrierflg = false,
+                TargetName = "None"
             };
             //入室してきたときにDictionaryの値を追加
             Server.ServerInfo.GetServerInfo().ScoreList.Add(UserName, 0);
@@ -86,7 +87,9 @@ namespace TeamProject2022.Hubs
                 hp = Server.ServerInfo.GetServerInfo().MaxHp,
                 id = temp_id,
                 shotflg = false,
-                barrierflg = false
+                barrierflg = false,
+                TargetName = "None"
+
             };
             //入室してきたときにDictionaryの値を追加
             Server.ServerInfo.GetServerInfo().ScoreList.Add(UserName, 0);
@@ -117,13 +120,22 @@ namespace TeamProject2022.Hubs
             Broadcast(_room).OnMove(_self);
         }
         public async Task MoveAsync_test(Vector3 pos, Quaternion rot,
-            float hp,bool shotflg,bool barrierflg)
+            float hp,bool shotflg,bool barrierflg,
+            string TargetName)
         {
             _self.hp = hp;
             _self.Position = pos;
             _self.Rotation = rot;
             _self.shotflg = shotflg;
             _self.barrierflg = barrierflg;
+            if (TargetName == null)
+            {
+                _self.TargetName = "None";
+            }
+            else
+            {
+                _self.TargetName = TargetName;
+            }
             
             Broadcast(_room).OnMove_test(_self);
         }

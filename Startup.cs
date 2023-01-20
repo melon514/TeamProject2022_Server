@@ -29,6 +29,20 @@ namespace Server
     public sealed class ServerInfo
     {
         /*
+         * @var     AppearPlannedPosition
+         * @brief   出現するかもしれない範囲の原点位置
+         */
+        public Vector3[] AppearPlannedPosition=new Vector3[]
+        {
+            new Vector3(2000,1000,-2500),
+            new Vector3(2000,2000,2500),
+            new Vector3(-2000,2000,-2500),
+            new Vector3(-2000,1000,2500),
+            new Vector3(0,1000,500),
+            new Vector3(0,2000,-500),
+        };
+
+        /*
          * @var     TimeLimit
          * @brief   ゲームの時間制限
          *          これを弄って決めるといいよ
@@ -142,21 +156,32 @@ namespace Server
             }
         }
 
+        //todo(melon)   :ここの出現の処理をAppearPlannedPositionを使った処理に変更
         public async void Com_AppereTarget()
         {
             //UnityEngineのRandomが使えませんクソです
-            System.Random pos;
+            Random Seed = new Random();
+            int Group = Seed.Next(0, 5);
+            Random Offsets_Horizontal = new Random();
+            //System.Random pos;
             //あった時邪魔なので削除
 
-            pos = new System.Random((int)TimeLimit);
-            //NOTE:(melon)  ここはとりあえず4体生成したいのでを入れてる
-            for (int i = 0; i < 4; ++i)
+            //pos = new System.Random((int)TimeLimit);
+            //NOTE:(melon)  クライアントでの数値(生成したい数に合わせる)
+            for (int i = 0; i < 15; ++i)
             {
+                Vector3 _pos = new Vector3(.0f, .0f, .0f);
                 Targets t = new Targets();
                 t.id = i;
-                t.x = pos.Next(-500, 500);
-                t.y = 0.0f;
-                t.z = pos.Next(-500, 500);
+                t.x = AppearPlannedPosition[Group].x + Offsets_Horizontal.Next(-1000, 1000);
+                //t.x = pos.Next(-500, 500);
+                
+                t.y = AppearPlannedPosition[Group].y + Offsets_Horizontal.Next(-700, 700);
+                //t.y = 0.0f;
+
+                t.z = AppearPlannedPosition[Group].z + Offsets_Horizontal.Next(-1000, 1000);
+                //t.z = pos.Next(-500, 500);
+
                 //t.pos = new Vector3(pos.Next(-500, 500),
                 //    0.0f,
                 //    pos.Next(-500, 500));
