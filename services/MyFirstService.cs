@@ -81,7 +81,7 @@ namespace Client.Services
             Console.WriteLine(ServerInfo.GetServerInfo().PlayerReady.Count);
             //そもそも4人集まってなかったら始めないようにする、デフォルト4人
             //todo(melon):  ルーム作成の処理を創ったらここをそのルームのプレイヤーの限界数に変更
-            if (ServerInfo.GetServerInfo().PlayerReady.Count < 2)
+            if (ServerInfo.GetServerInfo().PlayerReady.Count < 1)
             {
                 return false;
             }
