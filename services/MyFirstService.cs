@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MagicOnion;
 using MagicOnion.Server;
 using Server;
@@ -67,8 +68,6 @@ namespace Client.Services
                 var count = ServerInfo.GetServerInfo().Players.Count;
                 ServerInfo.GetServerInfo().Players.Add(name, count);
                 ServerInfo.GetServerInfo().PlayerList.Add(name, pl);
-                ServerInfo.GetServerInfo().Shotflgs.Add(name, false);
-                ServerInfo.GetServerInfo().Barrierflgs.Add(name, false);
                 //ServerInfo.GetServerInfo().PlayerList.Add(name,);
                 return count;
             }
@@ -106,6 +105,13 @@ namespace Client.Services
             }
 
             Console.WriteLine("all player ready");
+
+            //タイムスパンの取得と制限時間の開始
+            ServerInfo.GetServerInfo().ThreadLife = true;
+            ServerInfo.GetServerInfo().SetUpTimeSpan();
+            ServerInfo.GetServerInfo().clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+            ServerInfo.GetServerInfo().clock.Start();
+
             //全員準備完了
             return true;
         }
@@ -181,6 +187,18 @@ namespace Client.Services
                 new Dictionary<string, bool>(ServerInfo.GetServerInfo().Barrierflgs);
             temp_barrerflg.Remove(name);
             return temp_barrerflg;
+        }
+
+        public async UnaryResult<bool> InitializeServerConfig()
+        {
+            ServerInfo.GetServerInfo().PlayerReady.Clear();
+            ServerInfo.GetServerInfo().PlayerList.Clear();
+            ServerInfo.GetServerInfo().TimeLimit = 300;
+            ServerInfo.GetServerInfo().Players.Clear();
+            ServerInfo.GetServerInfo().targets.Clear();
+            ServerInfo.GetServerInfo().ThreadLife = false;
+
+            return true;
         }
     }
 }

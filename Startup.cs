@@ -48,7 +48,8 @@ namespace Server
          *          これを弄って決めるといいよ
          */
         //public float TimeLimit = 300;
-        public float TimeLimit = 75;
+        //public float TimeLimit = 150;
+        public float TimeLimit = 30;
         /*
          * @var     span
          * @brief   一秒にかかる時間
@@ -56,6 +57,7 @@ namespace Server
          */
         public float span { get; set; }
 
+        public bool ThreadLife = false;
 
         public float MaxHp = 0.0f;
         /*
@@ -104,7 +106,8 @@ namespace Server
         public Dictionary<string,Room> Rooms = new Dictionary<string, Room>();
 
         public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
-        
+
+        public Thread clock;
         private ServerInfo() { }
 
         /*
@@ -136,7 +139,8 @@ namespace Server
 
         public void AsyncClock()
         {
-            while (true)
+            //while (true)
+            while (ThreadLife)
             {
                 //note:(melon)  実体に持たせててずっと保存されてるため1ループしたら削除するようにこの処理
                 if (targets.Count >= 1)
@@ -218,9 +222,9 @@ namespace Server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //タイムスパン取得用
-            ServerInfo.GetServerInfo().SetUpTimeSpan();
-            Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            clock.Start();
+            //ServerInfo.GetServerInfo().SetUpTimeSpan();
+            //Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+            //clock.Start();
 
             if (env.IsDevelopment())
             {
