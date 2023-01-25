@@ -63,6 +63,7 @@ namespace TeamProject2022.Hubs
             //Server.ServerInfo.GetServerInfo().PlayerList.Add(_self.Name, _self);
             //Console.WriteLine("ConnectedPlayer:" + Server.ServerInfo.GetServerInfo().PlayerList.Count);
             (_room, _storage) = await Group.AddAsync(RoomName, _self);
+            
             //BroadcastExceptSelf(_room).OnJoin(_self);
 
             //BroadcastExceptSelf(_room).OnJoin(_self);

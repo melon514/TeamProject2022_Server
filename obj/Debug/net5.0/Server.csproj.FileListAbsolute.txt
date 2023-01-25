@@ -115,3 +115,8 @@ C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\refint\S
 C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\Server.pdb
 C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\Server.genruntimeconfig.cache
 C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\ref\Server.dll
+C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\staticwebassets\Server.StaticWebAssets.Pack.cache
+C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\staticwebassets\msbuild.Server.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\staticwebassets\msbuild.build.Server.props
+C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\staticwebassets\msbuild.buildMultiTargeting.Server.props
+C:\Users\bouni\dev\TeamProjects\TeamProject2022_Server\obj\Debug\net5.0\staticwebassets\msbuild.buildTransitive.Server.props

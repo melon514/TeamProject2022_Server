@@ -9,7 +9,7 @@ using MagicOnion.Server;
 using Server;
 using TeamProject2022.Shared.Services;
 using TeamProject2022.Shared.MessagePacks;
-
+using System.Text.RegularExpressions;
 
 namespace Client.Services
 {
@@ -197,6 +197,9 @@ namespace Client.Services
             ServerInfo.GetServerInfo().Players.Clear();
             ServerInfo.GetServerInfo().targets.Clear();
             ServerInfo.GetServerInfo().ThreadLife = false;
+            ServerInfo.GetServerInfo().ScoreList.Clear();
+
+            
 
             return true;
         }
