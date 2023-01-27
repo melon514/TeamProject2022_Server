@@ -32,7 +32,7 @@ namespace Server
          * @var     AppearPlannedPosition
          * @brief   出現するかもしれない範囲の原点位置
          */
-        public Vector3[] AppearPlannedPosition=new Vector3[]
+        public Vector3[] AppearPlannedPosition = new Vector3[]
         {
             new Vector3(2000,1000,-2500),
             new Vector3(2000,2000,2500),
@@ -48,7 +48,10 @@ namespace Server
          *          これを弄って決めるといいよ
          */
         //public float TimeLimit = 300;
-        public float TimeLimit = 75;
+        //public float TimeLimit = 150;
+        public float TimeLimit = 30;
+        //タイムリミット初期化用の変数
+        public float TimeLimit_Default = 30;
         /*
          * @var     span
          * @brief   一秒にかかる時間
@@ -56,6 +59,7 @@ namespace Server
          */
         public float span { get; set; }
 
+        public bool ThreadLife = false;
 
         public float MaxHp = 0.0f;
         /*
@@ -101,10 +105,14 @@ namespace Server
          * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
          *          もしかしたらintの部分をPlayerにするといろいろ悪いことできるかも？
          */
-        public Dictionary<string,Room> Rooms = new Dictionary<string, Room>();
+        public Dictionary<string, Room> Rooms = new Dictionary<string, Room>();
 
-        public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
-        
+        public Dictionary<string, Player> PlayerList = new Dictionary<string, Player>();
+
+        public int InPlayerCount = 0;
+        public int MaxPlayerCount = 1;
+
+        public Thread clock;
         private ServerInfo() { }
 
         /*
@@ -136,7 +144,8 @@ namespace Server
 
         public void AsyncClock()
         {
-            while (true)
+            Console.WriteLine("Thread_born");
+            while (ThreadLife)
             {
                 //note:(melon)  実体に持たせててずっと保存されてるため1ループしたら削除するようにこの処理
                 if (targets.Count >= 1)
@@ -154,6 +163,7 @@ namespace Server
 
                 }
             }
+            Console.WriteLine("Thread_Die");
         }
 
         //todo(melon)   :ここの出現の処理をAppearPlannedPositionを使った処理に変更
@@ -175,7 +185,7 @@ namespace Server
                 t.id = i;
                 t.x = AppearPlannedPosition[Group].x + Offsets_Horizontal.Next(-1000, 1000);
                 //t.x = pos.Next(-500, 500);
-                
+
                 t.y = AppearPlannedPosition[Group].y + Offsets_Horizontal.Next(-700, 700);
                 //t.y = 0.0f;
 
@@ -219,8 +229,9 @@ namespace Server
         {
             //タイムスパン取得用
             ServerInfo.GetServerInfo().SetUpTimeSpan();
-            Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            clock.Start();
+            //ServerInfo.GetServerInfo().SetUpTimeSpan();
+            //Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+            //clock.Start();
 
             if (env.IsDevelopment())
             {

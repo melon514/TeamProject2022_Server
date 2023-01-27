@@ -121,7 +121,7 @@ namespace TeamProject2022.Hubs
         }
         public async Task MoveAsync_test(Vector3 pos, Quaternion rot,
             float hp,bool shotflg,bool barrierflg,
-            string TargetName)
+            string TargetName, float shot_interbal)
         {
             _self.hp = hp;
             _self.Position = pos;
@@ -136,6 +136,8 @@ namespace TeamProject2022.Hubs
             {
                 _self.TargetName = TargetName;
             }
+
+            _self.InterbalCount = shot_interbal;
             
             Broadcast(_room).OnMove_test(_self);
         }

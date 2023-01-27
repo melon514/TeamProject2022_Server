@@ -3,12 +3,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MagicOnion;
 using MagicOnion.Server;
 using Server;
 using TeamProject2022.Shared.Services;
 using TeamProject2022.Shared.MessagePacks;
-
+using System.Text.RegularExpressions;
 
 namespace Client.Services
 {
@@ -67,8 +68,6 @@ namespace Client.Services
                 var count = ServerInfo.GetServerInfo().Players.Count;
                 ServerInfo.GetServerInfo().Players.Add(name, count);
                 ServerInfo.GetServerInfo().PlayerList.Add(name, pl);
-                ServerInfo.GetServerInfo().Shotflgs.Add(name, false);
-                ServerInfo.GetServerInfo().Barrierflgs.Add(name, false);
                 //ServerInfo.GetServerInfo().PlayerList.Add(name,);
                 return count;
             }
@@ -87,7 +86,7 @@ namespace Client.Services
             Console.WriteLine(ServerInfo.GetServerInfo().PlayerReady.Count);
             //そもそも4人集まってなかったら始めないようにする、デフォルト4人
             //todo(melon):  ルーム作成の処理を創ったらここをそのルームのプレイヤーの限界数に変更
-            if (ServerInfo.GetServerInfo().PlayerReady.Count < 1)
+            if (ServerInfo.GetServerInfo().PlayerReady.Count < ServerInfo.GetServerInfo().MaxPlayerCount)
             {
                 return false;
             }
@@ -106,6 +105,21 @@ namespace Client.Services
             }
 
             Console.WriteLine("all player ready");
+
+            //タイムスパンの取得と制限時間の開始
+            //ここで人数確認して最後の人が入ってきたらこのスレッドを開始する
+            if (ServerInfo.GetServerInfo().InPlayerCount == ServerInfo.GetServerInfo().MaxPlayerCount - 1)
+            {
+                ServerInfo.GetServerInfo().ThreadLife = true;
+                ServerInfo.GetServerInfo().clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+                ServerInfo.GetServerInfo().clock.Start();
+
+                ServerInfo.GetServerInfo().InPlayerCount++;
+            }
+            else
+            {
+                ServerInfo.GetServerInfo().InPlayerCount++;
+            }
             //全員準備完了
             return true;
         }
@@ -142,7 +156,7 @@ namespace Client.Services
             return true;
         }
 
-        public async UnaryResult<bool> ChangeShotflg(string name,bool flg)
+        public async UnaryResult<bool> ChangeShotflg(string name, bool flg)
         {
             if (ServerInfo.GetServerInfo().Shotflgs[name] != flg)
             {
@@ -155,7 +169,7 @@ namespace Client.Services
             //    !ServerInfo.GetServerInfo().Shotflgs[name];
         }
 
-        public async UnaryResult<bool> ChangeBarrierflg(string name,bool flg)
+        public async UnaryResult<bool> ChangeBarrierflg(string name, bool flg)
         {
             if (ServerInfo.GetServerInfo().Barrierflgs[name] != flg)
             {
@@ -181,6 +195,30 @@ namespace Client.Services
                 new Dictionary<string, bool>(ServerInfo.GetServerInfo().Barrierflgs);
             temp_barrerflg.Remove(name);
             return temp_barrerflg;
+        }
+
+        public async UnaryResult<bool> InitializeServerConfig()
+        {
+            ServerInfo.GetServerInfo().InPlayerCount--;
+            //退出したプレイヤーの数がリスト数に満たない場合はまだルームの掃除をしない
+            if (ServerInfo.GetServerInfo().InPlayerCount != 0)
+            {
+                return false;
+            }
+
+            ServerInfo.GetServerInfo().PlayerReady.Clear();
+            ServerInfo.GetServerInfo().PlayerList.Clear();
+            ServerInfo.GetServerInfo().TimeLimit = ServerInfo.GetServerInfo().TimeLimit_Default;
+            ServerInfo.GetServerInfo().Players.Clear();
+            ServerInfo.GetServerInfo().targets.Clear();
+            ServerInfo.GetServerInfo().ThreadLife = false;
+            ServerInfo.GetServerInfo().ScoreList.Clear();
+            ServerInfo.GetServerInfo().InPlayerCount = 0;
+
+
+
+
+            return true;
         }
     }
 }
