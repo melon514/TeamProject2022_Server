@@ -136,7 +136,7 @@ namespace TeamProject2022.Hubs
             {
                 _self.TargetName = TargetName;
             }
-            
+
             Broadcast(_room).OnMove_test(_self);
         }
 
@@ -145,7 +145,7 @@ namespace TeamProject2022.Hubs
         {
             await CompletedTask;
         }
-        
-        
+
+
     }
 }
