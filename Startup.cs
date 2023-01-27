@@ -48,7 +48,10 @@ namespace Server
          *          これを弄って決めるといいよ
          */
         //public float TimeLimit = 300;
-        public float TimeLimit = 75;
+        //public float TimeLimit = 150;
+        public float TimeLimit = 30;
+        //タイムリミット初期化用の変数
+        public float TimeLimit_Default = 30;
         /*
          * @var     span
          * @brief   一秒にかかる時間
@@ -56,6 +59,7 @@ namespace Server
          */
         public float span { get; set; }
 
+        public bool ThreadLife = false;
 
         public float MaxHp = 0.0f;
         /*
@@ -95,7 +99,7 @@ namespace Server
          */
         public Dictionary<string, int> Players = new Dictionary<string, int>();
 
-        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？
+        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
         /*
          * @var     Rooms
          * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
@@ -105,6 +109,10 @@ namespace Server
 
         public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
 
+        public int InPlayerCount = 0;
+        public int MaxPlayerCount = 2;
+
+        public Thread clock;
         private ServerInfo() { }
 
         /*
@@ -136,7 +144,8 @@ namespace Server
 
         public void AsyncClock()
         {
-            while (true)
+            Console.WriteLine("Thread_born");
+            while (ThreadLife)
             {
                 //note:(melon)  実体に持たせててずっと保存されてるため1ループしたら削除するようにこの処理
                 if (targets.Count >= 1)
@@ -154,6 +163,7 @@ namespace Server
 
                 }
             }
+            Console.WriteLine("Thread_Die");
         }
 
         //todo(melon)   :ここの出現の処理をAppearPlannedPositionを使った処理に変更
@@ -219,8 +229,9 @@ namespace Server
         {
             //タイムスパン取得用
             ServerInfo.GetServerInfo().SetUpTimeSpan();
-            Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
-            clock.Start();
+            //ServerInfo.GetServerInfo().SetUpTimeSpan();
+            //Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
+            //clock.Start();
 
             if (env.IsDevelopment())
             {
