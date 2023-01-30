@@ -927,11 +927,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\MyUnityProject\\Server\\Server.csproj",
+      "projectUniqueName": "E:\\MyUnityProject\\TeamProject2022_Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "E:\\MyUnityProject\\Server\\Server.csproj",
+      "projectPath": "E:\\MyUnityProject\\TeamProject2022_Server\\Server.csproj",
       "packagesPath": "C:\\Users\\2190286\\.nuget\\packages\\",
-      "outputPath": "E:\\MyUnityProject\\Server\\obj\\",
+      "outputPath": "E:\\MyUnityProject\\TeamProject2022_Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\2190286\\AppData\\Roaming\\NuGet\\NuGet.Config",

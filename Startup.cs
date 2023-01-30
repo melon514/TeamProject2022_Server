@@ -19,14 +19,36 @@ namespace Server
     /*
      * @class       Room
      * @brief       サーバーが保存するルーム情報
-     *              今持たせてるのはPlayerの情報のみ
      */
     public class Room
     {
-        public List<Player> PlayerData;
+        public Dictionary<string, ServerInfo> serverInfos = new Dictionary<string, ServerInfo>();
+
+        public ServerInfo getServerInfos(string roomname)
+        {
+            if (serverInfos.ContainsKey(roomname))
+            {
+                return serverInfos[roomname];
+            }
+
+            return null;
+        }
+
+        public void AddServerInfo(string roomname)
+        {
+            ServerInfo si = new ServerInfo();
+            serverInfos.Add(roomname, si);
+        }
+
+        private static Room ROOMINFO = new Room();
+        public static Room GetRoomInfo()
+        {
+            return ROOMINFO;
+        }
+        
     }
 
-    public sealed class ServerInfo
+    public class ServerInfo
     {
         /*
          * @var     AppearPlannedPosition
@@ -61,7 +83,7 @@ namespace Server
 
         public bool ThreadLife = false;
 
-        public float MaxHp = 0.0f;
+        public float MaxHp = 100.0f;
         /*
          * @var     targets
          * @brief   ターゲットのリスト
@@ -72,7 +94,7 @@ namespace Server
          * @var     SERVERINFO
          * @brief   この実体一つで管理したいのでこのような形式にしてる
          */
-        private static ServerInfo SERVERINFO = new ServerInfo();
+        //private static ServerInfo SERVERINFO = new ServerInfo();
 
         /*
          * @var     ScoreList
@@ -107,13 +129,15 @@ namespace Server
          */
         public Dictionary<string, Room> Rooms = new Dictionary<string, Room>();
 
+
         public Dictionary<string, Player> PlayerList = new Dictionary<string, Player>();
 
         public int InPlayerCount = 0;
-        public int MaxPlayerCount = 1;
+        //public int MaxPlayerCount = 1;
+        public int MaxPlayerCount = 2;
 
         public Thread clock;
-        private ServerInfo() { }
+        public ServerInfo() { }
 
         /*
          * @func     GetServerInfo
@@ -122,7 +146,7 @@ namespace Server
          */
         public static ServerInfo GetServerInfo()
         {
-            return SERVERINFO;
+            return null;
         }
 
         /*
@@ -155,6 +179,7 @@ namespace Server
                 //ミリ秒換算で1秒スリープしてlimitを減らしてる
                 System.Threading.Thread.Sleep(1000);
                 TimeLimit -= span;
+                Console.WriteLine(TimeLimit);
 
                 if (Math.Floor(TimeLimit) % 10 == 0)
                 {
@@ -228,7 +253,7 @@ namespace Server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //タイムスパン取得用
-            ServerInfo.GetServerInfo().SetUpTimeSpan();
+            //ServerInfo.GetServerInfo().SetUpTimeSpan();
             //ServerInfo.GetServerInfo().SetUpTimeSpan();
             //Thread clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
             //clock.Start();
