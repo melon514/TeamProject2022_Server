@@ -99,7 +99,7 @@ namespace Server
          */
         public Dictionary<string, int> Players = new Dictionary<string, int>();
 
-        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
+        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？
         /*
          * @var     Rooms
          * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
@@ -110,7 +110,7 @@ namespace Server
         public Dictionary<string,Player> PlayerList = new Dictionary<string,Player>();
 
         public int InPlayerCount = 0;
-        public int MaxPlayerCount = 2;
+        public int MaxPlayerCount = 1;
 
         public Thread clock;
         private ServerInfo() { }
@@ -185,7 +185,7 @@ namespace Server
                 t.id = i;
                 t.x = AppearPlannedPosition[Group].x + Offsets_Horizontal.Next(-1000, 1000);
                 //t.x = pos.Next(-500, 500);
-                
+
                 t.y = AppearPlannedPosition[Group].y + Offsets_Horizontal.Next(-700, 700);
                 //t.y = 0.0f;
 
