@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MagicOnion.Server.Hubs;
+using Server;
 using TeamProject2022.Shared.Hub;
 using TeamProject2022.Shared.MessagePacks;
 using UnityEngine;
@@ -78,7 +79,8 @@ namespace TeamProject2022.Hubs
         public async Task<Player[]> JoinAsync_test(string RoomName,
             string UserName, Vector3 Position, Quaternion Rotation)
         {
-            var temp_id = Server.ServerInfo.GetServerInfo().PlayerList.Count;
+            //var temp_id = Server.ServerInfo.GetServerInfo().PlayerList.Count;
+            var temp_id = Room.GetRoomInfo().getServerInfos(RoomName).PlayerList.Count;
             _self = new Player
             {
                 Name = UserName,
@@ -86,7 +88,8 @@ namespace TeamProject2022.Hubs
                 Rotation = Rotation,
                 time = 300,
                 score = 0,
-                hp = Server.ServerInfo.GetServerInfo().MaxHp,
+                //hp = Server.ServerInfo.GetServerInfo().MaxHp,
+                hp = 100,
                 id = temp_id,
                 shotflg = false,
                 barrierflg = false,
@@ -94,7 +97,8 @@ namespace TeamProject2022.Hubs
 
             };
             //入室してきたときにDictionaryの値を追加
-            Server.ServerInfo.GetServerInfo().ScoreList.Add(UserName, 0);
+            //Server.ServerInfo.GetServerInfo().ScoreList.Add(UserName, 0);
+            Room.GetRoomInfo().getServerInfos(RoomName).ScoreList.Add(UserName, 0);
             //Server.ServerInfo.GetServerInfo().PlayerList.Add(_self.Name, _self);
             //Console.WriteLine("ConnectedPlayer:" + Server.ServerInfo.GetServerInfo().PlayerList.Count);
             (_room, _storage) = await Group.AddAsync(RoomName, _self);
