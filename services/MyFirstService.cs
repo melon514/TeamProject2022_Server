@@ -20,8 +20,8 @@ namespace Client.Services
         {
 
             return ServerInfo.GetServerInfo().TimeLimit;
-        }
-
+        }        
+        
         public async UnaryResult<float> AsyncTimeSet_room(string room,float time)
         {
             return Room.GetRoomInfo().getServerInfos(room).TimeLimit;
@@ -173,7 +173,6 @@ namespace Client.Services
                 var count = Room.GetRoomInfo().getServerInfos(room).Players.Count;
                 Room.GetRoomInfo().getServerInfos(room).Players.Add(name, count);
                 Room.GetRoomInfo().getServerInfos(room).PlayerList.Add(name, pl);
-                //Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
                 return count;
             }
         }
@@ -306,7 +305,7 @@ namespace Client.Services
             return true;
         }
 
-        public async UnaryResult<bool> InitializeServerConfig_room(string room,string name)
+        public async UnaryResult<bool> InitializeServerConfig_room(string room, string name)
         {
             //Room.GetRoomInfo().getServerInfos(room).InPlayerCount--;
             //退出したプレイヤーの数がリスト数に満たない場合はまだルームの掃除をしない
@@ -334,7 +333,7 @@ namespace Client.Services
             Room.GetRoomInfo().getServerInfos(room).InPlayerCount--;
 
             //ルーム内にいるプレイヤーが0人でルームを削除
-            if(Room.GetRoomInfo().getServerInfos(room).InPlayerCount==0)
+            if (Room.GetRoomInfo().getServerInfos(room).InPlayerCount == 0)
             {
                 Room.GetRoomInfo().getServerInfos(room).targets.Clear();
                 Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
