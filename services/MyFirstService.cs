@@ -305,24 +305,43 @@ namespace Client.Services
             return true;
         }
 
-        public async UnaryResult<bool> InitializeServerConfig_room(string room)
+        public async UnaryResult<bool> InitializeServerConfig_room(string room, string name)
         {
-            Room.GetRoomInfo().getServerInfos(room).InPlayerCount--;
+            //Room.GetRoomInfo().getServerInfos(room).InPlayerCount--;
             //退出したプレイヤーの数がリスト数に満たない場合はまだルームの掃除をしない
-            if(Room.GetRoomInfo().getServerInfos(room).InPlayerCount != 0)
-            {
-                return false;
-            }
+            //if(Room.GetRoomInfo().getServerInfos(room).InPlayerCount != 0)
+            //{
+            //    return false;
+            //}
 
-            Room.GetRoomInfo().getServerInfos(room).PlayerReady.Clear();
-            Room.GetRoomInfo().getServerInfos(room).PlayerList.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).PlayerReady.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).PlayerList.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).TimeLimit = Room.GetRoomInfo().getServerInfos(room).TimeLimit_Default;
+            //Room.GetRoomInfo().getServerInfos(room).Players.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).targets.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
+            //Room.GetRoomInfo().getServerInfos(room).ScoreList.Clear();
+            //Room.GetRoomInfo().getServerInfos(room).InPlayerCount = 0;
+            //Room.GetRoomInfo().serverInfos.Remove(room);
+
+            //ルームに登録されてる人の情報の削除
+            Room.GetRoomInfo().getServerInfos(room).PlayerReady.Remove(name);
+            Room.GetRoomInfo().getServerInfos(room).PlayerList.Remove(name);
             Room.GetRoomInfo().getServerInfos(room).TimeLimit = Room.GetRoomInfo().getServerInfos(room).TimeLimit_Default;
-            Room.GetRoomInfo().getServerInfos(room).Players.Clear();
-            Room.GetRoomInfo().getServerInfos(room).targets.Clear();
-            Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
-            Room.GetRoomInfo().getServerInfos(room).ScoreList.Clear();
-            Room.GetRoomInfo().getServerInfos(room).InPlayerCount = 0;
-            Room.GetRoomInfo().serverInfos.Remove(room);
+            Room.GetRoomInfo().getServerInfos(room).Players.Remove(name);
+            Room.GetRoomInfo().getServerInfos(room).ScoreList.Remove(name);
+            Room.GetRoomInfo().getServerInfos(room).InPlayerCount--;
+
+            //ルーム内にいるプレイヤーが0人でルームを削除
+            if (Room.GetRoomInfo().getServerInfos(room).InPlayerCount == 0)
+            {
+                Room.GetRoomInfo().getServerInfos(room).targets.Clear();
+                Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
+                Room.GetRoomInfo().serverInfos.Remove(room);
+            }
+            //Room.GetRoomInfo().getServerInfos(room).targets.Remove(name);
+            //Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
+            //Room.GetRoomInfo().serverInfos.Remove(room);
 
             return true;
         }
