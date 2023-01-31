@@ -45,7 +45,7 @@ namespace Server
         {
             return ROOMINFO;
         }
-        
+
     }
 
     public class ServerInfo
@@ -71,9 +71,9 @@ namespace Server
          */
         //public float TimeLimit = 300;
         //public float TimeLimit = 150;
-        public float TimeLimit = 30;
+        public float TimeLimit = 630;
         //タイムリミット初期化用の変数
-        public float TimeLimit_Default = 30;
+        public float TimeLimit_Default = 630;
         /*
          * @var     span
          * @brief   一秒にかかる時間
@@ -121,7 +121,7 @@ namespace Server
          */
         public Dictionary<string, int> Players = new Dictionary<string, int>();
 
-        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？  
+        //note:(melon)  この形にすると複数ルームと所属してるプレイヤーを取得できそう？
         /*
          * @var     Rooms
          * @brief   現在の部屋とそれに所属してるプレイヤーIDを保存する変数
