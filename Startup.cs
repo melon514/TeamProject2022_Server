@@ -71,9 +71,9 @@ namespace Server
          */
         //public float TimeLimit = 300;
         //public float TimeLimit = 150;
-        public float TimeLimit = 630;
+        public float TimeLimit = 180;
         //タイムリミット初期化用の変数
-        public float TimeLimit_Default = 630;
+        public float TimeLimit_Default = 180;
         /*
          * @var     span
          * @brief   一秒にかかる時間
