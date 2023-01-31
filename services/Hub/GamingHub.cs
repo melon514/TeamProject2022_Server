@@ -80,7 +80,15 @@ namespace TeamProject2022.Hubs
             string UserName, Vector3 Position, Quaternion Rotation)
         {
             //var temp_id = Server.ServerInfo.GetServerInfo().PlayerList.Count;
-            var temp_id = Room.GetRoomInfo().getServerInfos(RoomName).PlayerList.Count;
+            int index = 0;
+            foreach (var player in Room.GetRoomInfo().getServerInfos(RoomName).PlayerList)
+            {
+                if (player.Value.Name == UserName)
+                {
+                  break;  
+                }
+                ++index;
+            }
             _self = new Player
             {
                 Name = UserName,
@@ -90,7 +98,7 @@ namespace TeamProject2022.Hubs
                 score = 0,
                 //hp = Server.ServerInfo.GetServerInfo().MaxHp,
                 hp = 100,
-                id = temp_id,
+                id = index,
                 shotflg = false,
                 barrierflg = false,
                 TargetName = "None"
