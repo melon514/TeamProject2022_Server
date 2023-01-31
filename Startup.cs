@@ -83,7 +83,7 @@ namespace Server
 
         public bool ThreadLife = false;
 
-        public float MaxHp = 100.0f;
+        public float MaxHp = 400.0f;
         /*
          * @var     targets
          * @brief   ターゲットのリスト
@@ -136,6 +136,7 @@ namespace Server
         //public int MaxPlayerCount = 1;
         public int MaxPlayerCount = 2;
 
+        public bool onceclock = false;
         public Thread clock;
         public ServerInfo() { }
 

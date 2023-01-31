@@ -20,8 +20,8 @@ namespace Client.Services
         {
 
             return ServerInfo.GetServerInfo().TimeLimit;
-        }        
-        
+        }
+
         public async UnaryResult<float> AsyncTimeSet_room(string room,float time)
         {
             return Room.GetRoomInfo().getServerInfos(room).TimeLimit;
@@ -140,6 +140,7 @@ namespace Client.Services
                 var count = Room.GetRoomInfo().getServerInfos(room).Players.Count;
                 Room.GetRoomInfo().getServerInfos(room).Players.Add(name, count);
                 Room.GetRoomInfo().getServerInfos(room).PlayerList.Add(name, pl);
+                Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
                 return count;
             }
         }
@@ -155,7 +156,8 @@ namespace Client.Services
                 //ない場合なので諸々登録してから自分の番号を返却
                 Player pl = new Player();
                 pl.Name = name;
-                pl.hp = 100;
+                pl.hp = 400;
+                //pl.hp = Room.GetRoomInfo().getServerInfos(room).MaxHp;
 
                 //登録された時についでにリストに追加
                 if (Room.GetRoomInfo().getServerInfos(room) == null)
@@ -173,6 +175,7 @@ namespace Client.Services
                 var count = Room.GetRoomInfo().getServerInfos(room).Players.Count;
                 Room.GetRoomInfo().getServerInfos(room).Players.Add(name, count);
                 Room.GetRoomInfo().getServerInfos(room).PlayerList.Add(name, pl);
+                Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
                 return count;
             }
         }
@@ -219,17 +222,15 @@ namespace Client.Services
 
             //タイムスパンの取得と制限時間の開始
             //ここで人数確認して最後の人が入ってきたらこのスレッドを開始する
-            if (ServerInfo.GetServerInfo().InPlayerCount == ServerInfo.GetServerInfo().MaxPlayerCount - 1)
+            //if (ServerInfo.GetServerInfo().InPlayerCount == ServerInfo.GetServerInfo().MaxPlayerCount - 1)
+            if (ServerInfo.GetServerInfo().onceclock == false)
             {
                 ServerInfo.GetServerInfo().ThreadLife = true;
                 ServerInfo.GetServerInfo().clock = new Thread(new ThreadStart(ServerInfo.GetServerInfo().AsyncClock));
                 ServerInfo.GetServerInfo().clock.Start();
 
-                ServerInfo.GetServerInfo().InPlayerCount++;
-            }
-            else
-            {
-                ServerInfo.GetServerInfo().InPlayerCount++;
+
+                //ServerInfo.GetServerInfo().InPlayerCount++;
             }
             //全員準備完了
             return true;
@@ -262,7 +263,7 @@ namespace Client.Services
 
             //タイムスパンの取得と制限時間の開始
             //ここで人数確認して最後の人が入ってきたらこのスレッドを開始する
-            if (Room.GetRoomInfo().getServerInfos(room).InPlayerCount == Room.GetRoomInfo().getServerInfos(room).MaxPlayerCount - 1)
+            if (Room.GetRoomInfo().getServerInfos(room).onceclock == false)
             {
                 Room.GetRoomInfo().getServerInfos(room).SetUpTimeSpan();
                 Room.GetRoomInfo().getServerInfos(room).ThreadLife = true;
@@ -270,11 +271,12 @@ namespace Client.Services
                     new Thread(new ThreadStart(Room.GetRoomInfo().getServerInfos(room).AsyncClock));
                 Room.GetRoomInfo().getServerInfos(room).clock.Start();
 
-                Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
+                //Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
+                Room.GetRoomInfo().getServerInfos(room).onceclock = true;
             }
             else
             {
-                Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
+                //Room.GetRoomInfo().getServerInfos(room).InPlayerCount++;
             }
             //全員準備完了
             return true;
@@ -338,6 +340,8 @@ namespace Client.Services
                 Room.GetRoomInfo().getServerInfos(room).targets.Clear();
                 Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
                 Room.GetRoomInfo().serverInfos.Remove(room);
+
+                Console.WriteLine("Destroyed_room:" + room);
             }
             //Room.GetRoomInfo().getServerInfos(room).targets.Remove(name);
             //Room.GetRoomInfo().getServerInfos(room).ThreadLife = false;
