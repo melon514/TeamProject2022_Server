@@ -101,7 +101,8 @@ namespace TeamProject2022.Hubs
                 id = index,
                 shotflg = false,
                 barrierflg = false,
-                TargetName = "None"
+                TargetName = "None",
+                Immolized = false
 
             };
             //入室してきたときにDictionaryの値を追加
@@ -135,7 +136,7 @@ namespace TeamProject2022.Hubs
         }
         public async Task MoveAsync_test(Vector3 pos, Quaternion rot,
             float hp,bool shotflg,bool barrierflg,
-            string TargetName,float InterbalShot)
+            string TargetName,float InterbalShot,bool immolized)
         {
             _self.hp = hp;
             _self.Position = pos;
@@ -152,6 +153,7 @@ namespace TeamProject2022.Hubs
             }
 
             _self.InterbalCount = InterbalShot;
+            _self.Immolized = immolized;
             Broadcast(_room).OnMove_test(_self);
         }
 

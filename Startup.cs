@@ -129,6 +129,9 @@ namespace Server
          */
         public Dictionary<string, Room> Rooms = new Dictionary<string, Room>();
 
+        public List<int> DestroyedTargetGroup = new List<int>();
+        public ArrayList DestroyedTarget = new ArrayList();
+
 
         public Dictionary<string, Player> PlayerList = new Dictionary<string, Player>();
 
@@ -201,6 +204,7 @@ namespace Server
             Random Offsets_Horizontal = new Random();
             //System.Random pos;
             //あった時邪魔なので削除
+            DestroyedTarget.Clear();
 
             //pos = new System.Random((int)TimeLimit);
             //NOTE:(melon)  クライアントでの数値(生成したい数に合わせる)
@@ -226,15 +230,15 @@ namespace Server
                 targets.Add(t);
             }
             //for debug
-            foreach (var sl in ScoreList)
-            {
-                if (ScoreList.Count == 0)
-                {
-                    Console.WriteLine("ListValue is None");
-                    break;
-                }
-                Console.WriteLine(sl.Key + ":" + sl.Value);
-            }
+            //foreach (var sl in ScoreList)
+            //{
+            //    if (ScoreList.Count == 0)
+            //    {
+            //        Console.WriteLine("ListValue is None");
+            //        break;
+            //    }
+            //    Console.WriteLine(sl.Key + ":" + sl.Value);
+            //}
 
         }
     }
